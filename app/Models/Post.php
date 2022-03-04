@@ -11,7 +11,15 @@ class Post extends Model
     use Sluggable;
     use HasFactory;
 
-     /**
+    protected $fillable = [
+        'title', 'body', 'iframe', 'image', 'user_id'
+    ];
+
+    public static function latest()
+    {
+    }
+
+    /**
      * Return the sluggable configuration array for this model.
      *
      * @return array
@@ -29,5 +37,18 @@ class Post extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getGetExcerptAttribute()
+    {
+        return substr($this->body, 0, 140);
+    }
+
+    public function  getGetImageAttribute()
+    {
+        if($this->image)
+        {
+            return url("storage/$this->image");
+        }
     }
 }

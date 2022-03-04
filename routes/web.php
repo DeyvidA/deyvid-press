@@ -13,5 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'PageController@post');
-Route::get('blog/{post}', 'PageController@posts')->name('post');
+Route::get('/', 'PageController@posts');
+Route::get('blog/{post}', 'PageController@post')->name('post');
+
+Route::resource('posts', 'Backend\PostController')
+    ->middleware('auth')
+    ->except('show');
